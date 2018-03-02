@@ -1,12 +1,14 @@
-
+#!/bin/python3
 import time
-from pynput import mouse
-from pynput.mouse import Button, Controller
-from pynput.keyboard import Key, Controller as KeyController
+from pynput import mouse as MouseListener
+from pynput.mouse import Button
+from pynput.mouse import Controller as MouseController
+from pynput.keyboard import Controller as KeyController
+from pynput.keyboard import Key
 
 # tuple of x,y coords.
 four_buttons = []
-mouse = Controller()
+mouse = MouseController()
 keyboard = KeyController()
 
 def main():
@@ -21,17 +23,17 @@ def on_click(x,y,button,pressed):
 			stop_recording()
 
 def start_recording():
-	with mouse.Listener(on_click=on_click) as listener:
+	with MouseListener.Listener(on_click=on_click) as listener:
 		listener.join()
 
 def stop_recording():
-	mouse.Listener.stop
-	run_four_buttons()
+	MouseListener.Listener.stop
+	while True:
+		run_four_buttons()
 
 def run_four_buttons():
 	global four_buttons
 	print("in Run Four Buttons")
-	print("Data: {}".format(str(four_buttons)))
 	#click
 	mouse.press(Button.left)
 	mouse.release(Button.left)
